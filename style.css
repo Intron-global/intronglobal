@@ -1180,8 +1180,27 @@ body {
 
 .hero {
   background:
-    radial-gradient(circle at top left, rgba(203, 217, 234, 0.2) 0%, rgba(203, 217, 234, 0) 28%),
-    linear-gradient(135deg, #26384d 0%, #4b647f 48%, #7a91a8 100%);
+    linear-gradient(118deg, #172435 0%, #24384d 38%, #52687d 68%, #8798a8 100%);
+  isolation: isolate;
+}
+
+.hero::before {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background:
+    radial-gradient(circle at 76% 34%, rgba(238, 244, 250, 0.18) 0%, rgba(238, 244, 250, 0) 34%),
+    linear-gradient(118deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 48%);
+  opacity: 0.85;
+  z-index: -2;
+}
+
+.hero::after {
+  display: none;
 }
 
 .btn.primary,
