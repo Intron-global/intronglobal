@@ -36,12 +36,12 @@
       </section>
 
       <section class="section contact-page">
-        <form id="contactForm" class="contact-form" enctype="multipart/form-data" novalidate>
-          <input type="text" name="name" placeholder="Name / Company" required />
+        <form id="contactForm" class="contact-form" enctype="multipart/form-data">
+          <input type="text" name="name" placeholder="Name / Company" maxlength="80" required />
           <input type="email" name="email" placeholder="Email Address" required />
           <p class="email-note">We will reply to the email address you enter, so please make sure it is accurate.</p>
-          <input type="text" name="subject" placeholder="Subject" required />
-          <textarea name="message" rows="6" placeholder="Write your message..." required></textarea>
+          <input type="text" name="subject" placeholder="Subject" maxlength="120" required />
+          <textarea name="message" rows="6" placeholder="Write your message..." minlength="20" maxlength="3000" required></textarea>
 
           <label class="file-label">Attach file (optional, max 20MB):
             <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png">
@@ -87,6 +87,69 @@
 
     const MAX_FILE_SIZE = 20 * 1024 * 1024;
     const ALLOWED_TYPES = ["application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","image/jpeg","image/png","text/plain"];
+    const CONTACT_HISTORY_KEY = "intron_contact_history";
+    const CONTACT_COOLDOWN_MS = 60 * 1000;
+    const DUPLICATE_BLOCK_MS = 24 * 60 * 60 * 1000;
+    const SPAM_PATTERNS = [
+      /(?:search\s*engine\s*optimization|\bSEO\b)/i,
+      /(?:backlinks?|guest\s*posts?|website\s*traffic)/i,
+      /(?:casino|gambling|crypto(?:currency)?)/i
+    ];
+
+    function createContentHash(value) {
+      let hash = 2166136261;
+      for (let i = 0; i < value.length; i += 1) {
+        hash ^= value.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+      return (hash >>> 0).toString(36);
+    }
+
+    function getContactHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(CONTACT_HISTORY_KEY)) || {};
+      } catch (_) {
+        return {};
+      }
+    }
+
+    function saveContactHistory(contentHash) {
+      try {
+        localStorage.setItem(CONTACT_HISTORY_KEY, JSON.stringify({
+          sentAt: Date.now(),
+          contentHash
+        }));
+      } catch (_) {
+        // Do not block sending when browser storage is unavailable.
+      }
+    }
+
+    function validateInquiry(form) {
+      const subject = form.subject.value.trim();
+      const message = form.message.value.trim();
+      const combined = `${subject} ${message}`;
+      const normalized = combined.toLowerCase().replace(/\s+/g, " ");
+      const contentHash = createContentHash(normalized);
+      const history = getContactHistory();
+      const elapsed = Date.now() - Number(history.sentAt || 0);
+
+      if (message.length < 20) {
+        return { error: "Please enter at least 20 characters in your message." };
+      }
+      if ((combined.match(/(?:https?:\/\/|www\.)/gi) || []).length > 1) {
+        return { error: "Only one link is allowed per inquiry." };
+      }
+      if (SPAM_PATTERNS.some((pattern) => pattern.test(combined))) {
+        return { error: "Advertising or spam inquiries cannot be sent." };
+      }
+      if (elapsed < CONTACT_COOLDOWN_MS) {
+        return { error: "Repeated submissions are limited. Please try again shortly." };
+      }
+      if (history.contentHash === contentHash && elapsed < DUPLICATE_BLOCK_MS) {
+        return { error: "The same inquiry cannot be sent again within 24 hours." };
+      }
+      return { contentHash };
+    }
 
     async function uploadFileToFileIo(file) {
       if (!file) return null;
@@ -128,6 +191,17 @@
         return;
       }
 
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const validation = validateInquiry(form);
+      if (validation.error) {
+        alert(validation.error);
+        return;
+      }
+
       if (!confirm("Once sent, the email cannot be edited or cancelled.\n\nHave you reviewed your message?\nDo you want to send this email?")) {
         return;
       }
@@ -159,6 +233,7 @@
         };
 
         await emailjs.send("INTRON MAIL", "template_ahovfta", payload);
+        saveContactHistory(validation.contentHash);
         alert("Your inquiry has been sent successfully.");
         form.reset();
         document.getElementById("fileInfo").textContent = "";

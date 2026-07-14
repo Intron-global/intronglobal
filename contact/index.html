@@ -36,11 +36,11 @@
 
       <section class="section contact-page">
         <form id="contactForm" class="contact-form">
-          <input type="text" name="name" placeholder="이름 / 회사명" required />
+          <input type="text" name="name" placeholder="이름 / 회사명" maxlength="80" required />
           <input type="email" name="email" placeholder="이메일" required />
           <p class="email-note">입력하신 이메일로 회신드리므로 정확한 주소를 입력해 주세요.</p>
-          <input type="text" name="subject" placeholder="문의 제목" required />
-          <textarea name="message" rows="6" placeholder="문의 내용을 입력해 주세요." required></textarea>
+          <input type="text" name="subject" placeholder="문의 제목" maxlength="120" required />
+          <textarea name="message" rows="6" placeholder="문의 내용을 입력해 주세요." minlength="20" maxlength="3000" required></textarea>
 
           <div style="display:none;">
             <input type="text" name="hp_field" autocomplete="off">
@@ -85,6 +85,69 @@
 
     const MAX_FILE_SIZE = 20 * 1024 * 1024;
     const ALLOWED_TYPES = ["application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","image/jpeg","image/png","text/plain"];
+    const CONTACT_HISTORY_KEY = "intron_contact_history";
+    const CONTACT_COOLDOWN_MS = 60 * 1000;
+    const DUPLICATE_BLOCK_MS = 24 * 60 * 60 * 1000;
+    const SPAM_PATTERNS = [
+      /(?:검색\s*엔진\s*최적화|\bSEO\b)/i,
+      /(?:백링크|게스트\s*포스트|웹사이트\s*트래픽)/i,
+      /(?:도박|카지노|가상\s*화폐|암호\s*화폐)/i
+    ];
+
+    function createContentHash(value) {
+      let hash = 2166136261;
+      for (let i = 0; i < value.length; i += 1) {
+        hash ^= value.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+      return (hash >>> 0).toString(36);
+    }
+
+    function getContactHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(CONTACT_HISTORY_KEY)) || {};
+      } catch (_) {
+        return {};
+      }
+    }
+
+    function saveContactHistory(contentHash) {
+      try {
+        localStorage.setItem(CONTACT_HISTORY_KEY, JSON.stringify({
+          sentAt: Date.now(),
+          contentHash
+        }));
+      } catch (_) {
+        // 저장소를 사용할 수 없는 환경에서는 전송 자체를 막지 않는다.
+      }
+    }
+
+    function validateInquiry(form) {
+      const subject = form.subject.value.trim();
+      const message = form.message.value.trim();
+      const combined = `${subject} ${message}`;
+      const normalized = combined.toLowerCase().replace(/\s+/g, " ");
+      const contentHash = createContentHash(normalized);
+      const history = getContactHistory();
+      const elapsed = Date.now() - Number(history.sentAt || 0);
+
+      if (message.length < 20) {
+        return { error: "문의 내용을 20자 이상 입력해 주세요." };
+      }
+      if ((combined.match(/(?:https?:\/\/|www\.)/gi) || []).length > 1) {
+        return { error: "링크는 1개까지만 입력할 수 있습니다." };
+      }
+      if (SPAM_PATTERNS.some((pattern) => pattern.test(combined))) {
+        return { error: "광고성 또는 스팸성 문의는 전송할 수 없습니다." };
+      }
+      if (elapsed < CONTACT_COOLDOWN_MS) {
+        return { error: "연속 전송은 제한됩니다. 잠시 후 다시 시도해 주세요." };
+      }
+      if (history.contentHash === contentHash && elapsed < DUPLICATE_BLOCK_MS) {
+        return { error: "동일한 문의는 24시간 이내에 다시 전송할 수 없습니다." };
+      }
+      return { contentHash };
+    }
 
     async function uploadFileToFileIo(file) {
       if (!file) return null;
@@ -126,6 +189,17 @@
         return;
       }
 
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const validation = validateInquiry(form);
+      if (validation.error) {
+        alert(validation.error);
+        return;
+      }
+
       if (!confirm("전송 후에는 수정 또는 취소가 어렵습니다.\n\n내용을 다시 확인하셨나요?\n지금 전송하시겠습니까?")) {
         return;
       }
@@ -157,6 +231,7 @@
         };
 
         await emailjs.send("INTRON MAIL", "template_ahovfta", payload);
+        saveContactHistory(validation.contentHash);
         alert("문의가 정상적으로 전송되었습니다.");
         form.reset();
         document.getElementById("fileInfo").textContent = "";
