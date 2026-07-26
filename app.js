@@ -221,15 +221,21 @@ const nav = ko
       ["Contact", "/contact-en/"],
     ];
 function languageLink() {
-  let p = location.pathname;
-  if (ko) {
-    if (p === "/") return "/index-en/";
-    return p.replace(/\/$/, "-en/");
-  }
-  return p.replace(/-en\//, "/");
+  return ko ? englishLanguageLink() : koreanLanguageLink();
+}
+function englishLanguageLink() {
+  const p = location.pathname;
+  if (p === "/") return "/index-en/";
+  if (p === "/index-en/" || p === "/index-en" || /-en\/?$/.test(p)) return p;
+  return p.replace(/\/$/, "-en/");
+}
+function koreanLanguageLink() {
+  const p = location.pathname;
+  if (p === "/index-en/" || p === "/index-en") return "/";
+  return p.replace(/-en\/?$/, "/");
 }
 function header() {
-  return `<div class="topline"></div><header class="header wrap"><a class="brand" href="${homeUrl}"><span class="brand-mark">IG</span>INTRON GLOBAL</a><nav class="nav">${nav.map((x) => `<a href="${x[1]}">${x[0]}</a>`).join("")}</nav><div class="lang"><a class="${ko ? "active" : ""}" href="${ko ? location.pathname : location.pathname.replace("-en/", "/")}">KR</a> / <a class="${ko ? "" : "active"}" href="${languageLink()}">EN</a></div><button class="menu" aria-label="menu">☰</button></header>`;
+  return `<div class="topline"></div><header class="header wrap"><a class="brand" href="${homeUrl}"><span class="brand-mark">IG</span>INTRON GLOBAL</a><nav class="nav">${nav.map((x) => `<a href="${x[1]}">${x[0]}</a>`).join("")}</nav><div class="lang"><a class="${ko ? "active" : ""}" href="${ko ? location.pathname : koreanLanguageLink()}">KR</a> / <a class="${ko ? "" : "active"}" href="${ko ? englishLanguageLink() : location.pathname}">EN</a></div><button class="menu" aria-label="menu">☰</button></header>`;
 }
 function footer() {
   return `<footer class="footer"><div class="wrap"><div class="footer-top"><div><div class="eyebrow">INTRON GLOBAL</div><h2>${d.footer}</h2></div><a class="button primary" href="${contactUrl}">${t("거래 문의하기", "Contact us")} <b>↗</b></a></div><div class="footer-bottom"><div><strong>${t("(주)인트론글로벌", "INTRON GLOBAL CO., LTD.")}</strong><br>${t("사업분야: 도매업 · 무역업(수출·수입)", "Wholesale · Trade · Export / Import")}<br>${address}</div><div>intron1101@gmail.com<br>FAX. 0504-423-5748<br>© 2025 INTRON GLOBAL CO., LTD.</div></div></div></footer>`;
