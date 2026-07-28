@@ -258,13 +258,13 @@ function supplyChain() {
     <div class="supply-link" aria-hidden="true"><span>SUPPLY</span></div>
     <article class="chain-node chain-intron">
       <div class="planet-core"><div class="chain-logo"></div></div>
-      <div class="planet-caption"><h4>INTRON GLOBAL</h4><p>${t("검수 · 유통 · 무역", "Quality · Distribution · Trade")}</p></div>
+      <div class="planet-caption"><h4>INTRON GLOBAL</h4><p>${t("제품/시장 발굴 · 공급", "Product/Market discovery · Supply")}</p></div>
     </article>
     <div class="supply-link" aria-hidden="true"><span>DELIVER</span></div>
     <div class="orbit-carrier orbit-market-carrier">
       <article class="chain-node chain-market">
         <div class="planet-core"><div class="chain-graphic">${marketIcon}</div></div>
-        <div class="planet-caption"><h4>${t("시장 및 고객", "Markets & clients")}</h4><p>${t("국내 · 해외 공급", "Domestic · Global delivery")}</p></div>
+        <div class="planet-caption"><h4>${t("시장 및 고객", "Markets & clients")}</h4><p>${t("국내 · 해외 유통", "Domestic · Global distribution")}</p></div>
       </article>
     </div>
   </div>`;
@@ -305,13 +305,9 @@ if (page === "home") {
   document.querySelectorAll(".service-num, .product-no").forEach((item) => item.remove());
 }
 
-// 주소만 노출하고 이메일과 팩스는 숨긴다.
-document.querySelectorAll(".contact-line").forEach((item) => {
-  item.textContent = address;
-});
-document.querySelectorAll(".info-block").forEach((item) => {
-  item.innerHTML = `<div><span>ADDRESS</span>${address}</div>`;
-});
+// 메인과 문의 페이지의 주소는 숨기고, 푸터 주소만 유지한다.
+document.querySelectorAll(".contact-line").forEach((item) => item.remove());
+document.querySelectorAll(".info-block").forEach((item) => item.remove());
 
 const footerLegal = document.querySelector(".footer-bottom > div:last-child");
 if (footerLegal) {
