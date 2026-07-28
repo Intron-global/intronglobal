@@ -1078,6 +1078,116 @@ body[data-page="home"] .product:nth-child(3) .material {
   font-size: 13px !important;
   margin-top: 10px;
 }
+
+/* Subpage refresh: remove the separate right-hand visual and extend the navy system. */
+body[data-page="domestic"] .sub-hero + .section.light,
+body[data-page="export"] .sub-hero + .section.light,
+body[data-page="sourcing"] .sub-hero + .section.light {
+  position: relative;
+  overflow: hidden;
+  padding: 112px 0 124px;
+  color: var(--white);
+  background:
+    radial-gradient(circle at 88% 16%, rgba(93, 178, 177, 0.2), transparent 31%),
+    radial-gradient(circle at 5% 88%, rgba(30, 112, 126, 0.2), transparent 32%),
+    linear-gradient(135deg, #0b2032 0%, #0a1c2e 56%, #071725 100%);
+}
+body[data-page="domestic"] .sub-hero + .section.light::before,
+body[data-page="export"] .sub-hero + .section.light::before,
+body[data-page="sourcing"] .sub-hero + .section.light::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.34;
+  background-image:
+    linear-gradient(rgba(151, 214, 211, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(151, 214, 211, 0.1) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, transparent, black 12%, black 84%, transparent);
+}
+body[data-page="domestic"] .detail-grid,
+body[data-page="export"] .detail-grid,
+body[data-page="sourcing"] .detail-grid {
+  position: relative;
+  z-index: 1;
+  display: block;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: clamp(34px, 5vw, 62px);
+  border: 1px solid rgba(159, 214, 215, 0.2);
+  border-left-color: rgba(217, 255, 77, 0.55);
+  background: linear-gradient(135deg, rgba(17, 49, 68, 0.88), rgba(8, 27, 43, 0.7));
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.22);
+}
+body[data-page="domestic"] .detail-grid::after,
+body[data-page="export"] .detail-grid::after,
+body[data-page="sourcing"] .detail-grid::after {
+  content: "";
+  position: absolute;
+  right: -92px;
+  bottom: -116px;
+  width: 290px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(159, 214, 215, 0.18);
+  border-radius: 50%;
+}
+body[data-page="domestic"] .detail-copy,
+body[data-page="export"] .detail-copy,
+body[data-page="sourcing"] .detail-copy {
+  position: relative;
+  z-index: 1;
+}
+body[data-page="domestic"] .detail-copy .section-label,
+body[data-page="export"] .detail-copy .section-label,
+body[data-page="sourcing"] .detail-copy .section-label {
+  color: #9fe2e0;
+}
+body[data-page="domestic"] .detail-copy h2,
+body[data-page="export"] .detail-copy h2,
+body[data-page="sourcing"] .detail-copy h2 {
+  color: var(--white);
+  font-size: clamp(34px, 4vw, 52px);
+}
+body[data-page="domestic"] .detail-copy p,
+body[data-page="export"] .detail-copy p,
+body[data-page="sourcing"] .detail-copy p {
+  max-width: 680px;
+  color: #c5d6de;
+}
+body[data-page="domestic"] .list,
+body[data-page="export"] .list,
+body[data-page="sourcing"] .list {
+  border-color: rgba(217, 255, 77, 0.72);
+}
+body[data-page="domestic"] .list div,
+body[data-page="export"] .list div,
+body[data-page="sourcing"] .list div {
+  border-color: rgba(159, 214, 215, 0.2);
+}
+body[data-page="domestic"] .list b,
+body[data-page="export"] .list b,
+body[data-page="sourcing"] .list b {
+  color: #9fe2e0;
+}
+body[data-page="domestic"] .detail-visual,
+body[data-page="export"] .detail-visual,
+body[data-page="sourcing"] .detail-visual {
+  display: none;
+}
+body[data-page="export"] .trade-cards {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, calc(100% - 56px));
+  margin: 30px auto 0;
+}
+body[data-page="export"] .trade-card {
+  border-color: rgba(159, 214, 215, 0.45);
+  color: var(--white);
+}
+body[data-page="export"] .trade-card p {
+  color: #b8cbd5;
+}
 .contact-section {
   padding-top: 90px;
 }
