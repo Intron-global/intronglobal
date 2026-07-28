@@ -62,13 +62,10 @@ button {
 .brand-mark {
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--lime);
-  color: var(--ink);
-  font-family: var(--mono);
-  font-size: 13px;
+  flex: 0 0 auto;
+  border-radius: 5px;
+  background: #fff url("/assets/intron-logo-vertical-black.jpeg") center / 100% 100% no-repeat;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
 }
 .nav {
   display: flex;

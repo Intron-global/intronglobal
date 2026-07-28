@@ -284,6 +284,17 @@ function contact() {
 document.getElementById("app").innerHTML =
   page === "home" ? home() : page === "contact" ? contact() : detail(page);
 
+const favicon = document.querySelector('link[rel="icon"]') || document.createElement("link");
+favicon.rel = "icon";
+favicon.type = "image/jpeg";
+favicon.href = "/assets/intron-logo-vertical-black.jpeg";
+if (!favicon.parentNode) document.head.append(favicon);
+
+document.querySelectorAll(".brand-mark").forEach((mark) => {
+  mark.textContent = "";
+  mark.setAttribute("aria-hidden", "true");
+});
+
 if (page === "home") {
   const signalTitle = document.querySelector(".signal-title");
   if (signalTitle) signalTitle.textContent = "Supply signal";
