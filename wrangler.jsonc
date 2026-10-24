@@ -3,6 +3,9 @@
   "name": "intronglobal",
   "main": "src/index.js",
   "compatibility_date": "2026-09-10",
+  "build": {
+    "command": "npm run build"
+  },
   "workers_dev": true,
   "assets": {
     "directory": "./public",

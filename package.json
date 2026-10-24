@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "node scripts/version-assets.mjs",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "test": "node --test --test-isolation=none",
