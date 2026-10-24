@@ -200,9 +200,18 @@ html:lang(ko) .sub-closing h2, html:lang(ko) .about-statement h2 { line-height: 
 .product-points span { color: var(--blue); }
 .product-points b { font-size: clamp(13px, .85vw, 18px); font-weight: 500; }
 .network { padding-top: 56px; padding-bottom: 100px; }
-.world-map.generated-map { width: 100%; max-width: none; height: auto; aspect-ratio: 3 / 1; margin: 38px auto 22px; }
-.generated-map > img { filter: saturate(.45); }
-.generated-map .map-pin { font-size: 9px; color: #354c55; }
+.world-map.generated-map { width: 100%; max-width: none; height: auto; aspect-ratio: 1600 / 820; margin: 38px auto 22px; }
+.generated-map > img { object-fit: contain; object-position: center; filter: none; }
+.generated-map .map-pin { display: block; width: 8px; height: 8px; font-size: 9px; color: #354c55; transform: translate(-50%, -50%); }
+.generated-map .map-pin i { display: block; }
+.generated-map .map-pin b { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); white-space: nowrap; }
+.generated-map .map-pin.eu b { left: auto; right: 15px; }
+.generated-map .map-pin.me b { left: 50%; top: 17px; transform: translateX(-50%); }
+.generated-map .map-pin.kr b { left: auto; right: 0; top: auto; bottom: 16px; transform: none; }
+.generated-map .map-pin.eu { left: 50.4%; top: 21.1%; }
+.generated-map .map-pin.tr { left: 58.1%; top: 27.8%; }
+.generated-map .map-pin.me { left: 61.1%; top: 34%; }
+.generated-map .map-pin.kr { left: 80.1%; right: auto; top: 29.3%; }
 .map-pin i { width: 8px; height: 8px; background: #377b89; box-shadow: 0 0 0 4px #377b8918; }
 .market-list { gap: 28px; }
 .market-list div { padding-top: 21px; }
@@ -398,8 +407,13 @@ html:lang(ko) .sub-hero h1 { line-height: 1.35; }
   .featured-product h2 { font-size: clamp(28px, 7vw, 36px); }
   .product-content > p:not(.eyebrow) { font-size: 15px; }
   .network { padding-top: 38px; }
-  .world-map.generated-map { aspect-ratio: 1.65; margin: 25px 0; transform: none; }
-  .generated-map .map-pin { font-size: 8px; gap: 4px; }
+  .world-map.generated-map { aspect-ratio: 1.25; margin: 25px 0; transform: none; }
+  .generated-map > img { object-fit: cover; object-position: 65% center; }
+  .generated-map .map-pin { font-size: 8px; }
+  .generated-map .map-pin.eu { left: 42.2%; top: 21.1%; }
+  .generated-map .map-pin.tr { left: 54.2%; top: 27.8%; }
+  .generated-map .map-pin.me { left: 58.9%; top: 34%; }
+  .generated-map .map-pin.kr { left: 88.6%; top: 29.3%; }
   .market-list { gap: 20px; }
   .market-list b, .market-list p { font-size: 13px; }
   .footer-rich .footer-top h2 { font-size: clamp(28px, 7vw, 35px); }
