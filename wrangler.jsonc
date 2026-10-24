@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "intronglobal",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-10",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "vars": {
+    "ALLOWED_ORIGINS": "https://www.intronglobal.co.kr,https://intronglobal.co.kr,https://intronglobal.dlwnsdn0825.workers.dev,http://localhost:8787,http://127.0.0.1:8787",
+    "ALLOWED_HOSTNAMES": "www.intronglobal.co.kr,intronglobal.co.kr,intronglobal.dlwnsdn0825.workers.dev",
+    "CONTACT_TO_EMAIL": "intron1101@gmail.com",
+    "GMAIL_ACCOUNT_EMAIL": "intron1101@gmail.com"
+  },
+  "secrets": {
+    "required": [
+      "TURNSTILE_SECRET",
+      "GMAIL_CLIENT_ID",
+      "GMAIL_CLIENT_SECRET",
+      "GMAIL_REFRESH_TOKEN"
+    ]
+  },
+  "ratelimits": [
+    {
+      "name": "CONTACT_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "account_id": "721b3e3614eca747991c7719f9ae1ec9"
+}

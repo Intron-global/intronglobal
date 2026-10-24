@@ -1,0 +1,4 @@
+Contact: mailto:intron1101@gmail.com
+Expires: 2027-09-10T00:00:00Z
+Canonical: https://www.intronglobal.co.kr/.well-known/security.txt
+Preferred-Languages: ko, en

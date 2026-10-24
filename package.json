@@ -1,0 +1,20 @@
+{
+  "name": "intronglobal-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test --test-isolation=none",
+    "check": "npm test",
+    "gmail:connect": "node scripts/gmail-connect.mjs"
+  },
+  "devDependencies": {
+    "miniflare": "5.20260908.0-alpha",
+    "wrangler": "^4.36.0"
+  },
+  "overrides": {
+    "sharp": "0.35.4"
+  }
+}
