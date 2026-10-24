@@ -63,12 +63,12 @@ const copy = {
     "contactTitle": "Tell us what you need<br>to source and trade.",
     "contactCopy": "Contact us about product sourcing, import, export and distribution.",
     "contactButton": "Contact INTRON GLOBAL <span>↗</span>",
-    "contactAddress": "503-439, 9 Gangnam-ro, Giheung-gu,<br>Yongin-si, Gyeonggi-do, Korea",
+    "contactAddress": "1, DONGBAEK 1-RO 37BEON-GIL, GIHEUNG-GU,<br>17012 YONGIN-SI, KOREA",
     "footerEyebrow": "TRADE INQUIRIES",
     "footerTitle": "Discuss your sourcing<br>and trade requirements.",
     "footerButton": "Contact our trading team <span>↗</span>",
     "footerBusiness": "Import · Export · Wholesale · Distribution",
-    "footerAddress": "503-439, 9 Gangnam-ro, Giheung-gu, Yongin-si, Gyeonggi-do, Korea",
+    "footerAddress": "1, DONGBAEK 1-RO 37BEON-GIL, GIHEUNG-GU, 17012 YONGIN-SI, KOREA",
     "toTop": "BACK TO TOP ↑"
   },
   "ko": {
@@ -135,12 +135,12 @@ const copy = {
     "contactTitle": "필요한 제품과 거래 조건을<br>알려주세요.",
     "contactCopy": "제품 소싱과 수출입, 국내외 유통에 관한 문의를 남겨 주세요.",
     "contactButton": "인트론글로벌에 문의하기 <span>↗</span>",
-    "contactAddress": "경기도 용인시 기흥구 강남로 9,<br>503-439호 (구갈동, 태평양프라자)",
+    "contactAddress": "경기도 용인시 기흥구 동백1로37번길 1<br>(우) 17012",
     "footerEyebrow": "무역·거래 문의",
     "footerTitle": "제품 소싱·수출입 문의를<br>편하게 남겨 주세요.",
     "footerButton": "제품·거래 문의하기 <span>↗</span>",
     "footerBusiness": "수출입·도매·유통",
-    "footerAddress": "경기도 용인시 기흥구 강남로 9, 503-439호 (구갈동, 태평양프라자)",
+    "footerAddress": "경기도 용인시 기흥구 동백1로37번길 1 (우) 17012",
     "toTop": "맨 위로 ↑"
   }
 };

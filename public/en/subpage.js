@@ -168,7 +168,7 @@ const pages = {
         ],
         [
           "ADDRESS",
-          "503-439, 9 Gangnam-ro, Giheung-gu,<br>Yongin-si, Gyeonggi-do, Korea"
+          "1, DONGBAEK 1-RO 37BEON-GIL, GIHEUNG-GU,<br>17012 YONGIN-SI, KOREA"
         ]
       ],
       "helper": "Share your company, required products, quantities and applications so we can discuss suitable sourcing and supply options.",
@@ -189,7 +189,7 @@ const pages = {
         ],
         [
           "주소",
-          "경기도 용인시 기흥구 강남로 9,<br>503-439호 (구갈동, 태평양프라자)"
+          "경기도 용인시 기흥구 동백1로37번길 1<br>(우) 17012"
         ]
       ],
       "helper": "회사명과 필요한 제품, 수량, 사용 용도를 알려주시면 거래와 공급에 관해 안내해 드리겠습니다.",
@@ -208,7 +208,7 @@ function footer(d) {
 }
 
 function render() {
-  const common = lang === 'en' ? { navAbout:'About',navMaterials:'Products',navNetwork:'Network',navContact:'Contact',footerEyebrow:'TRADE INQUIRIES',footerTitle:'Discuss your sourcing<br>and trade requirements.',footerButton:'Contact our trading team',footerBusiness:'Import · Export · Wholesale · Distribution',footerAddress:'503-439, 9 Gangnam-ro, Giheung-gu, Yongin-si, Gyeonggi-do, Korea',toTop:'BACK TO TOP ↑' } : { navAbout:'회사소개',navMaterials:'취급품목',navNetwork:'글로벌 네트워크',navContact:'문의',footerEyebrow:'무역·거래 문의',footerTitle:'제품 소싱·수출입 문의를<br>편하게 남겨 주세요.',footerButton:'제품·거래 문의하기',footerBusiness:'수출입·도매·유통',footerAddress:'경기도 용인시 기흥구 강남로 9, 503-439호 (구갈동, 태평양프라자)',toTop:'맨 위로 ↑' };
+  const common = lang === 'en' ? { navAbout:'About',navMaterials:'Products',navNetwork:'Network',navContact:'Contact',footerEyebrow:'TRADE INQUIRIES',footerTitle:'Discuss your sourcing<br>and trade requirements.',footerButton:'Contact our trading team',footerBusiness:'Import · Export · Wholesale · Distribution',footerAddress:'1, DONGBAEK 1-RO 37BEON-GIL, GIHEUNG-GU, 17012 YONGIN-SI, KOREA',toTop:'BACK TO TOP ↑' } : { navAbout:'회사소개',navMaterials:'취급품목',navNetwork:'글로벌 네트워크',navContact:'문의',footerEyebrow:'무역·거래 문의',footerTitle:'제품 소싱·수출입 문의를<br>편하게 남겨 주세요.',footerButton:'제품·거래 문의하기',footerBusiness:'수출입·도매·유통',footerAddress:'경기도 용인시 기흥구 동백1로37번길 1 (우) 17012',toTop:'맨 위로 ↑' };
   const d = pages[page][lang];
   const content = page === 'materials' ? `<section class="sub-content portfolio-grid">${d.groups.map(g => `<article class="portfolio-card"><span>${g[0]}</span><p class="eyebrow">${g[1]}</p><h2>${g[2]}</h2><ul>${g[3].map(i=>`<li>${i}</li>`).join('')}</ul></article>`).join('')}</section><section class="sub-closing"><p class="eyebrow">INTRON GLOBAL</p><h2>${d.afterTitle}</h2><p>${d.after}</p><a class="button button-primary" href="contact.html">${common.footerButton} <span>↗</span></a></section>` : page === 'contact' ? `<section class="sub-content contact-page"><p class="contact-helper">${d.helper}</p><div class="contact-page-cards">${d.cards.map((c,i)=>`<article><span>${c[0]}</span>${i === 0 ? `<a href="mailto:${c[1]}">${c[1]}</a>` : `<p>${c[1]}</p>`}</article>`).join('')}</div><a class="button button-primary" href="mailto:intron1101@gmail.com">${d.button}</a></section>` : `<section class="sub-content about-page"><p class="about-page-lead">${d.lead}</p><div class="fact-grid">${d.facts.map((f,i)=>`<article><span>0${i+1}</span><h3>${f[0]}</h3><p>${f[1]}</p></article>`).join('')}</div><div class="about-statement"><p class="eyebrow">INTRON GLOBAL</p><h2>${d.sectionTitle}</h2><p>${d.copy}</p><a class="button button-primary" href="materials.html">${common.navMaterials} <span>↗</span></a></div></section>`;
   document.documentElement.lang = lang;
